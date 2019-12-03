@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>library 3 ::: 슬라이드 plugin</title>
+    <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    <script src="jquery.min.js"></script>
+</head>
+<style>
+    .slide-list img{display:none; position:absolute; left:0; top:0;}
+</style>
+<body>
+    <div class="slide-list">
+        <img src="http://placehold.it/300x300/5f87e1/ffffff?text=1" alt="첫번째 이미지"/>
+        <img src="http://placehold.it/300x300/a841db/ffffff?text=2" alt="두번째 이미지"/>
+        <img src="http://placehold.it/300x300/429f6b/ffffff?text=3" alt="세번째 이미지"/>
+    </div>
+
+    <script>
+        $.fn.hsg_Slide = function(options){
+            var defaults = {        //디폴트 초기설정
+                delay:200,        //딜레이 2초
+                speed:100          //스피드 0.5
+            };
+
+            var options = $.extend({}, defaults,options);   //2개 이상의 객체를 하나로 합쳐준다 defaults,options을 빈 객체에 합쳐줌
+
+            var el = $(this);  //변수 el은 나 자신 this
+            var image = el.children('img');    //변수 image는 this의 자식인 img태그
+            var count = image.length;   //변수 count는  image변수의 갯수
+
+            var i = 0;  //변수 i는 0
+
+
+            image.eq(0).show(); //첫번째 이미지 보여지게
+
+            //이미지 슬라이드 타이머
+            var interval = setInterval(function(){
+                image.eq(i).fadeOut(options.speed); //옵션의 속도로 안보여줬다가
+                i = (i + 1 == count) ? 0 : i + 1;   //0 + 1즉 1이 이미지태그 인덱스는0부터시작이니까 그게 같으면 i는 0이고 그게 아니면 1 (삼항 연산자)
+                image.eq(i).fadeIn(options.speed); //옵션의 속도로 보여줌
+            }, options.delay);  //옵션의 딜레이되는 속도로
+        };
+
+        //슬라이드 실행
+        $('.slide-list').hsg_Slide({
+            delay:2000,
+            speed:1000
+        });
+    </script>
+</body>
+</html>
+

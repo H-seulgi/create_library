@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>library 5 :::  쉐이크 애니메이션 plugin </title>
+    <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    <script src="jquery.min.js"></script>
+</head>
+<style>
+.menulist{list-style:none; width:400px;}
+
+</style>
+<body>
+    <div class="menulist">
+        <li>첫번째 메뉴</li>
+        <li>두번째 메뉴</li>
+        <li>세번째 메뉴</li>
+        <li>네번째 메뉴</li>
+        <li>다섯번째 메뉴</li>
+    </div>
+
+    <script>
+        $.fn.hsg_shakeAnim = function(options){
+            var defaults = {    //디폴트 초기설정
+                shakeleft:100,
+                defaultleft:10,
+                evencolor:'#ccc',   //홀수 컬러 - index가 0부터 시작이라
+                oddcolor:'#f00',    //짝수 컬러 - index가 0부터 시작이라
+            };
+
+            var settings = $.extend({}, defaults, options); //2개 이상의 객체를 하나로 합쳐준다 defaults,options을 빈 객체에 합쳐줌
+
+
+            return this.each(function(){    //담긴 settings를 탐색함 
+                var s = settings;   //변수 s를 위에 있는 합친 객체라 하겠다
+                var el = $(this);   //변수 el은 this
+                var li_this = $("li", el);    //변수 items는 li 선택된 나 자신
+
+                $("li:odd", el).css('background-color', s.oddcolor);    //li에 짝수에 defauts에서 settings로 합쳐진 객체의 색으로 입혀줌
+                $("li:even", el).css('background-color', s.evencolor);  //li에 홀수에 defauts에서 settings로 합쳐진 객체의 색으로 입혀줌
+
+                li_this.mouseover(function(){ //li 중 선택한 나 자신 this일때 
+                    $(this).animate({ paddingLeft: s.shakeleft}, 500);  //마우스오버시 애니메이션 패딩레프트는 셋팅의 쉐이크레프트값, 그리고 0.5초간
+                }).mouseout(function(){
+                    $(this).animate({ paddingLeft: s.defaultleft}, 500); //마우스빠져나갔을 시 애니메이션 패딩레프트는 셋팅의 쉐이크레프트값, 그리고 0.5초간
+                });
+            });
+        };
+
+        $('.menulist').hsg_shakeAnim({
+            shakeleft:200, 
+            defaultleft:3
+        });
+
+
+
+    </script>
+</body>
+</html>
+

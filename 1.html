@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>library 1 ::: 테마 바꾸기 plugin</title>
+    <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    <script src="jquery.min.js"></script>
+</head>
+<style>
+    h1{background:none;}
+</style>
+<body>
+    <button type="button" class="theme1" data-target="target">테마1</button>
+    <button type="button" class="theme2" data-target="target">테마2</button>
+    <button type="button" class="theme3" data-target="target">테마3</button>
+    <h1 id="target">테마명이 보입니다.</h1>
+
+    <script>
+        $.fn.hsg_changeColor = function(){
+
+            //$('h1').css('background','none');   //h1에도 background가 먹힐 수 있으니 선언 전 셋팅
+            var settings = $.extend({   //2개 이상의 객체를 하나로 합쳐준다.
+                color:'red',   //디폴트 컬러 설정
+                background:'yellow'    //디폴트 배경 설정
+            });
+            return this.css({   //해당 요소 자체를 설정. this.css를 두줄 작성하는거랑 같은거같은데 아닌가..
+                color:settings.color,  //변수 setting의 컬러. 함수호출로 색상은 계속 바뀔 수있다
+                background:settings.background //변수 setting의 컬러. 함수호출로 배경은 계속 바뀔 수있다
+            });
+        };
+
+        $('.theme1').click(function(){  //테마1을 클릭하면
+            $(this).parent('body').hsg_changeColor();   //테마1의 부모 body에 디폴트 설정값이 적용
+            $(this).siblings('h1').hsg_changeColor();   //테마1의 형제 h1에 디폴트 설정값이 적용
+            $("#" + $(this).data("target")).text($(this).text() + '이 보이네요');    //this, 즉 나 자신 .theme1의 data-target의 텍스트 설정
+        });
+
+        $('.theme2').click(function(){ //테마2를 클릭하면
+            $(this).parent('body').hsg_changeColor({    //테마2의 부모 body에 백그라운드 blue로 설정해준걸로 적용
+                background: 'blue'
+            });
+            $(this).siblings('h1').hsg_changeColor({    //테마2의 형제 h1에 컬러는 스카이블루로, 배경은 디폴트 옐로우니까 없애줘야 함
+                color: 'skyblue',
+                background: 'none'
+            });
+            $("#" + $(this).data("target")).text($(this).text() + '가 보이네요');    //this, 즉 나 자신 .theme2의 data-target의 텍스트 설정
+        });
+
+        $('.theme3').click(function(){
+            $(this).parent('body').hsg_changeColor({    //테마3의 부모 body에 백그라운드 pink로 설정해준걸로 적용
+                background: 'pink'
+            });
+            $(this).siblings('h1').hsg_changeColor({    //테마2의 형제 h1에 컬러는 green, 배경은 디폴트 옐로우니까 없애줘야 함
+                color: 'green',
+                background: 'none'
+            });
+            $("#" + $(this).data("target")).text($(this).text() + '이 보이네요');    //this, 즉 나 자신 .theme3의 data-target의 텍스트 설정
+        });
+    </script>
+</body>
+</html>

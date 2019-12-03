@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>library 2 ::: 링크에 해당 url 보여지는 plugin</title>
+    <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    <script src="jquery.min.js"></script>
+</head>
+<style>
+    table{padding:10px; border:1px solid #000;}
+    caption{margin-bottom:10px; font-weight:bold; font-size:20px;}
+</style>
+<body>
+    <table>
+        <caption>인터넷 주소</caption>
+        <tbody>
+            <tr>
+                <th>네이버</th>
+                <td><a href="https://www.naver.com" target="_blank"></a></td>
+            </tr>
+            <tr>
+                <th>다음</th>
+                <td><a href="https://www.daum.net" target="_blank"></a></td>
+            </tr>
+            <tr>
+                <th>카카오</th>
+                <td><a href="https://www.kakao.com" target="_blank"></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        $.fn.hsg_linkShow = function(){
+            $('a').each(function(){    //a를 검사함
+                var link = $(this); //변수 link를 this라 하겠다
+                var th = link.parent('td').prev('th');  //변수 th는 선택된 나 자신의 a의 부모인 td의 앞에 있는 th태그라 하겠다
+                link.append(link.attr('href') + "로 이동됩니다 " + th.text() + "는 새창으로 이동됩니다.")   //선택된 나 자신의 a태그에 내용 추가
+            });
+            //return this;
+        };
+
+        $('a').hsg_linkShow();  //호출. 얘는 위에다 적으면 호이스팅 때문에 안먹힘
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>library 4 ::: 이동하는 애니메이션 plugin</title>
+    <!-- <link rel="stylesheet" type="text/css" href=""> -->
+    <script src="jquery.min.js"></script>
+</head>
+<style>
+    .seulgi,.dongsu{display:flex; justify-content:center; align-items:center; width:200px; height:200px; margin:40px; border-radius:50%; color:#fff;}
+    .seulgi{background:green;}
+    .dongsu{background:red}
+</style>
+<body>
+    <div class="seulgi">시간 넉넉하니깐<br>천천히 가자</div>
+    <div class="dongsu">난 화장실 급함<br>먼저 감 ㅅㄱ</div>
+
+    <script>
+        $.fn.hsg_Anim = function(options){
+            var el = $(this);  //el이라는 변수는 나 자신 this
+            var defaults = {    //객체를 변수에 담음. 디폴트 설정
+                distance:300,  //거리 0.3초
+                speed:300  //스피드 0.3초
+            };
+
+            var option = $.extend(true, {}, defaults, options); //true를 넣는 경우는 밑에 애까지 합치고 싶을때 넣는건데 여기선 굳이 안써도됨. 그냥 넣어봄
+
+            el.on('click', function(){ //this 즉 나 자신을 클릭하면
+                el.animate({'margin-left' : options.distance}, options.speed); //옵션값의 거리, 옵션값의 스피드로 움직임
+            });
+        };
+
+
+        $('.seulgi').hsg_Anim({
+            speed:1000,
+            distance:200
+        });
+
+        $('.dongsu').hsg_Anim({
+            speed:200,
+            distance:700
+        });
+    </script>
+</body>
+</html>
+
